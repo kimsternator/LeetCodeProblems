@@ -9,5 +9,6 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <algorithm>
 
 #endif //LEETCODEPROBLEMS_LEETCODEPROBLEMS_H
