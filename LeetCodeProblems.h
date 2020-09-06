@@ -10,5 +10,6 @@
 #include <string>
 #include <unordered_map>
 #include <algorithm>
+#include <cctype>
 
 #endif //LEETCODEPROBLEMS_LEETCODEPROBLEMS_H
