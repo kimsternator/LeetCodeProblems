@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//Easy
 //Remove Duplicates from sorted array
 int removeDuplicates(vector<int>& nums) {
     nums.erase(unique(nums.begin(), nums.end()), nums.end());
@@ -246,7 +247,106 @@ void rotate(vector<vector<int>>& matrix) {
     }
 }
 
+//Medium
+//3Sum
+vector<vector<int>> threeSum(vector<int>& nums) {
+    sort(nums.begin(), nums.end());
 
+    vector< vector<int> > validSums;
 
+    for(int i = 0; i < nums.size(); i++) {
+        if(i > 0 && nums[i] == nums[i - 1])
+            continue;
+
+        int left = i + 1, right = nums.size() - 1;
+
+        while(left < right) {
+            int tempSum = nums[i] + nums[left] + nums[right];
+
+            if(tempSum > 0)
+                right--;
+            else if(tempSum < 0)
+                left++;
+            else {
+                validSums.push_back({nums[i], nums[left], nums[right]});
+                left++;
+
+                while(nums[left] == nums[left - 1] && left < right)
+                    left++;
+            }
+        }
+    }
+
+    return validSums;
+}
+
+//Set Matrix Zeroes
+void setZeroes(vector<vector<int>>& matrix) {
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+    bool firstCol = false;
+
+    for(int i = 0; i < rows; i++) {
+        if(matrix[i][0] == 0)
+            firstCol = true;
+
+        for(int j = 1; j < cols; j++) {
+            if(matrix[i][j] == 0) {
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
+            }
+        }
+    }
+
+    for(int i = 1; i < rows; i++)
+        for(int j = 1; j < cols; j++)
+            if(matrix[i][0] == 0 || matrix[0][j] == 0)
+                matrix[i][j] = 0;
+
+    if(matrix[0][0] == 0)
+        for(int j = 1; j < cols; j++)
+            matrix[0][j] = 0;
+
+    if(firstCol)
+        for(int i = 0; i < rows; i++)
+            matrix[i][0] = 0;
+}
+
+//Group Anagrams
+vector<vector<string>> groupAnagrams(vector<string>& strs) {
+    vector< vector<string> > groups;
+    unordered_map<string, vector<string>> groupDict;
+
+    for(string s: strs) {
+        string temp = s;
+        sort(temp.begin(), temp.end());
+
+        groupDict[temp].push_back(s);
+    }
+
+    for(auto i = groupDict.begin(); i != groupDict.end(); i++) {
+        groups.push_back(i->second);
+    }
+
+    return groups;
+}
+
+//Increasing Triplet Subsequence
+bool increasingTriplet(vector<int>& nums) {
+    int num1 = INT_MAX, num2 = INT_MAX;
+
+    for(auto i = nums.begin(); i != nums.end(); i++) {
+        if(*i < num1)
+            num1 = *i;
+        else if(*i > num1 && *i < num2)
+            num2 = *i;
+        else if(*i > num2)
+            return true;
+    }
+
+    return false;
+}
+
+//
 
 

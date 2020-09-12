@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//Easy
 //Delete Node in a Linked List
 void deleteNode(ListNode* node) {
     node->val = node->next->val;
@@ -131,7 +132,52 @@ bool hasCycle(ListNode *head) {
     return true;
 }
 
+//Medium
+//AddTwoNumbers
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    int sum = 0;
+    ListNode* l3 = NULL;
+    ListNode** node = &l3;
+
+    while(l1 != NULL || l2 != NULL || sum > 0) {
+        if(l1 != NULL) {
+            sum += l1->val;
+            l1 = l1->next;
+        }
+
+        if(l2 != NULL) {
+            sum += l2->val;
+            l2 = l2->next;
+        }
+
+        *node = new ListNode(sum % 10);
+        sum /= 10;
+        node = &((*node)->next);
+    }
+
+    return l3;
+}
+
+//Odd Even Linked List
+ListNode* oddEvenList(ListNode* head) {
+    if(head == nullptr)
+        return nullptr;
+
+    ListNode* currOdd = head;
+    ListNode* currEven = head->next;
+    ListNode* evenHead = currEven;
 
 
+    while(currEven != nullptr && currEven->next != nullptr) {
+        currOdd->next = currEven->next;
+        currOdd = currOdd->next;
+        currEven->next = currOdd->next;
+        currEven = currEven->next;
+    }
+
+    currOdd->next = evenHead;
+
+    return head;
+}
 
 

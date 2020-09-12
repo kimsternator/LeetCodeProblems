@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//Easy
 //Reverse String
 void reverseString(vector<char>& s) {
     int len = s.size();
@@ -178,7 +179,75 @@ string longestCommonPrefix(vector<string>& strs) {
     return longPrefix;
 }
 
+//Medium
+//Longest Substring Without Repeating Characters
+int lengthOfLongestSubstring(string s) {
+    vector<char> substring;
+    int maxLength = 0;
 
+    for(int i = 0; i < s.length(); i++) {
+        auto it = std::find(substring.begin(), substring.end(), s[i]);
 
+        if(it != substring.end()) {
+            if(maxLength < substring.size())
+                maxLength = substring.size();
+            it++;
+            substring.erase(substring.begin(), it);
+        }
+
+        substring.push_back(s[i]);
+    }
+
+    if(maxLength < substring.size())
+        maxLength = substring.size();
+
+    return maxLength;
+}
+
+//Longest Palidromic Substring
+int paliLength(int left, int right, string s) {
+    int len = 0;
+
+    while(left >= 0 & right < s.size()) {
+        if(s[left] == s[right]) {
+            len = right - left + 1;
+            left--;
+            right++;
+        }
+        else {
+            break;
+        }
+    }
+
+    return len;
+}
+
+string longestPalindrome(string s) {
+    int start = 0, end = 0;
+
+    if(s.size() == 0) {
+        return "";
+    }
+    else {
+        for(int center = 0; center < s.size(); center++) {
+            int len1 = paliLength(center, center, s);
+            int len2 = paliLength(center, center + 1, s);
+
+            if(len1 > (end-start)) {
+                start = center - (len1 / 2);
+                end = center + (len1 / 2);
+            }
+
+            if(len2 > (end-start)) {
+                start = center + 1 - (len2 / 2);
+                end = center + (len2 / 2);
+            }
+        }
+    }
+
+    return s.substr(start, end - start + 1);
+}
+
+//
 
 
