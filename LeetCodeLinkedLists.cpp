@@ -180,4 +180,28 @@ ListNode* oddEvenList(ListNode* head) {
     return head;
 }
 
+//Intersection of Two Linked lists
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    if(headA == nullptr || headB == nullptr)
+        return nullptr;
+
+    ListNode* bStarter = headA;
+    ListNode* aStarter = headB;
+
+    while(bStarter != aStarter) {
+        if(bStarter == nullptr)
+            bStarter = headB;
+        else
+            bStarter = bStarter->next;
+
+        if(aStarter == nullptr)
+            aStarter = headA;
+        else
+            aStarter = aStarter->next;
+    }
+
+    return bStarter;
+}
+
+
 

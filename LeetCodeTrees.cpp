@@ -111,3 +111,146 @@ TreeNode* sortedArrayToBST(vector<int>& nums) {
 
     return tree(nums, 0, nums.size() - 1);
 }
+
+//Binary Tree Inorder Traversal
+void helper(TreeNode* root, vector<int> &order) {
+    if(root == nullptr)
+        return;
+
+    if(root->left != nullptr)
+        helper(root->left, order);
+
+    order.push_back(root->val);
+
+    if(root->right != nullptr)
+        helper(root->right, order);
+}
+
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> order;
+    helper(root, order);
+
+    return order;
+}
+
+
+//Binary Tree Zigzag Level Order Traversal
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>> order;
+    queue<TreeNode*> q;
+    queue<TreeNode*> next;
+    int row = 1;
+
+    if(root == nullptr)
+        return order;
+    else
+        q.push(root);
+
+    while(q.size() > 0) {
+        vector<int> values;
+
+        while(!q.empty()) {
+            auto node = q.front();
+
+            if(node->left != nullptr)
+                next.push(node->left);
+            if(node->right != nullptr)
+                next.push(node->right);
+
+            if(row%2 == 0)
+                values.insert(values.begin(), node->val);
+            else
+                values.push_back(node->val);
+
+            q.pop();
+        }
+
+        row++;
+        order.emplace_back(values);
+        q = move(next);
+    }
+
+    return order;
+}
+
+//Construct Binary Tree from Preorder and Inorder Traversal
+unordered_map<int, int> map;
+int index = 0;
+
+TreeNode* helper(vector<int>& preorder, vector<int>& inorder, int start, int end) {
+    if(start > end)
+        return nullptr;
+
+    TreeNode* root = new TreeNode(preorder[index]);
+    int position = map[preorder[index++]];
+
+    root->left = helper(preorder, inorder, start, position - 1);
+    root->right = helper(preorder, inorder, position + 1, end);
+
+    return root;
+}
+
+TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+    if(preorder.empty())
+        return nullptr;
+
+    for(int i = 0; i < inorder.size(); i++) {
+        map[inorder[i]] = i;
+    }
+
+    return helper(preorder, inorder, 0, inorder.size() - 1);
+}
+
+//Populating Next Right Pointers in Each Node
+Node* connect(Node* root) {
+    if(root == nullptr)
+        return nullptr;
+
+    Node** rootHead = &root;
+    queue<Node*> q;
+    queue<Node*> next;
+    q.push(root);
+
+    while(!q.empty()) {
+        while(!q.empty()) {
+            Node* curr = q.front();
+
+            if(curr->left != nullptr)
+                next.push(curr->left);
+            if(curr->right != nullptr)
+                next.push(curr->right);
+
+            q.pop();
+            if(q.size() == 0)
+                curr->next = nullptr;
+            else
+                curr->next = q.front();
+        }
+
+        q = move(next);
+    }
+
+    return *rootHead;
+}
+
+//Kth Smallest Element in a BST
+vector<int> inorder(TreeNode* root, vector<int> &nums) {
+    if(root == nullptr)
+        return nums;
+
+    inorder(root->left, nums);
+    nums.emplace_back(root->val);
+    inorder(root->right, nums);
+
+    return nums;
+}
+
+int kthSmallest(TreeNode* root, int k) {
+    if(root == nullptr)
+        return -1;
+
+    vector<int> nums;
+    inorder(root, nums);
+
+    return nums[k - 1];
+}
