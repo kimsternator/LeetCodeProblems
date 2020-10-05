@@ -214,9 +214,8 @@ int paliLength(int left, int right, string s) {
             left--;
             right++;
         }
-        else {
+        else
             break;
-        }
     }
 
     return len;

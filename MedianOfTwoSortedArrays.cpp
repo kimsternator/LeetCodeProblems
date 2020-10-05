@@ -13,6 +13,7 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
         double right = combined[(combined.size()+1) / 2];
         return (left + right) / 2;
     }
+
     return -1.0;
 }
 

@@ -72,4 +72,40 @@ int rob(vector<int>& nums) {
     return totals[totals.size() - 1];
 }
 
+//Medium
+//Jump Game
+enum Memo {Good, Bad, Default};
+
+//     bool canJump(vector<int>& nums) {
+//         vector<Memo> memo;
+
+//         for(int i = 0; i < nums.size(); i++)
+//             memo.push_back(Memo::Default);
+
+//         memo[memo.size() - 1] = Memo::Good;
+
+//         for(int i = nums.size() - 2; i >= 0; i--) {
+//             int furthestJump = min(i + nums[i], (int) nums.size() - 1);
+
+//             for(int j = i + 1; j <= furthestJump; j++) {
+//                 if(memo[j] == Memo::Good) {
+//                     memo[i] = Memo::Good;
+//                     break;
+//                 }
+//             }
+//         }
+
+//         return memo[0] == Memo::Good;
+//     }
+
+bool canJump(vector<int>& nums) {
+    int lastPos = nums.size() - 1;
+
+    for(int i = lastPos; i >= 0; i--)
+        if(i + nums[i] >= lastPos)
+            lastPos = i;
+
+    return lastPos == 0;
+}
+
 

@@ -127,26 +127,15 @@ vector<int> plusOne(vector<int>& digits) {
 
 //Move Zeros
 void moveZeroes(vector<int>& nums) {
-    for(int i = 0; i < nums.size(); i++) {
-        cout << nums[i] << ", ";
-    }
-    cout << endl;
-
     int pointer = 0, zeroEndPointer = 0;
     while(pointer < nums.size() - 1 && pointer < nums.size() - zeroEndPointer) {
         if(nums[pointer] == 0) {
             rotate(nums.begin() + pointer, nums.begin() + pointer + 1, nums.end());
             zeroEndPointer++;
-            cout << "rotato" << endl;
         }
         else {
             pointer++;
         }
-
-        for(int i = 0; i < nums.size(); i++) {
-            cout << nums[i] << ", ";
-        }
-        cout << endl;
     }
 }
 
@@ -154,8 +143,6 @@ void moveZeroes(vector<int>& nums) {
 vector<int> twoSum(vector<int>& nums, int target) {
     for(int i = 0; i < nums.size() - 1; i++) {
         for(int j = i + 1; j < nums.size(); j++) {
-            cout << nums[i] << " + " << nums[j] << endl;
-
             if(nums[i] + nums[j] == target) {
                 vector<int> solution = {i, j};
                 return solution;

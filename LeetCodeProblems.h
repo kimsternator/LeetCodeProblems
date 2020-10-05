@@ -11,5 +11,8 @@
 #include <unordered_map>
 #include <algorithm>
 #include <cctype>
+#include <sstream>
+#include <numeric>
+#include <math.h>
 
 #endif //LEETCODEPROBLEMS_LEETCODEPROBLEMS_H
